@@ -29,5 +29,23 @@ namespace dynamic_aes
             aes.Cipher(plainText, cipherText);
             txtResult.Text = Encoding.Unicode.GetString(cipherText);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (rbtn128.Checked)
+                keysize = Aes.KeySize.Bits128;
+            else if (rbt192.Checked)
+                keysize = Aes.KeySize.Bits192;
+            else
+                keysize = Aes.KeySize.Bits256;
+
+            byte[] plainText = new byte[16];
+            byte[] cipherText = new byte[16];
+
+            plainText = Encoding.Unicode.GetBytes(txtResult.Text.PadRight(8, ' '));
+            var aes = new Aes(keysize, new byte[16]);
+            aes.InvCipher(plainText, cipherText);
+            textBox1.Text = Encoding.Unicode.GetString(cipherText);
+        }
     }
 }
